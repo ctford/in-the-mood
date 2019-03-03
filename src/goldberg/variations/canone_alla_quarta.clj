@@ -24,7 +24,8 @@
 ;; Sine waves                                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(definst tone [frequency 440] (sin-osc frequency))
+(definst tone [frequency 440]
+  (sin-osc frequency))
 
 (definst beep [frequency 440 duration 1]
   (let [envelope (line 1 0 duration :action FREE)]
@@ -35,7 +36,6 @@
   (beep 300)
   (stop)
 )
-
 
 
 
@@ -102,12 +102,12 @@
   (midi->hz 69)
 )
 
-(defn ding [midi] (bell (midi->hz midi) 3))
+(defn ding [midi]
+  (bell (midi->hz midi) 5))
 
 (comment
   (ding 69)
 )
-
 
 
 
@@ -155,7 +155,7 @@
 
 (def major (scale [2 2 1 2 2 2 1]))
 
-(def C (from 60))
+(def C (from 72))
 (defs [D E F G A B]
   (map
     (comp from C major)
@@ -266,7 +266,8 @@
 ;; Canon                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn canon [f notes] (concat notes (f notes)))
+(defn canon [f notes]
+  (concat notes (f notes)))
 
 ; varieties of canon
 (defn simple [wait]
