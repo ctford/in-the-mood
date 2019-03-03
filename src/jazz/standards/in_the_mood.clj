@@ -18,7 +18,7 @@
     (->>
       bassline
       (where :pitch (comp low B flat major))
-      (tempo (bpm 140)))))
+      (tempo (bpm 90)))))
 
 (comment
   (jam (var in-the-mood))
