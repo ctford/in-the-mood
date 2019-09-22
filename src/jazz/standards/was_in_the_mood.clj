@@ -3,13 +3,13 @@
         [overtone.live :only [now]]
         [quil.core :only
          [color clear smooth sketch ellipse frame-rate background
-          width height stroke stroke-weight fill]]))
+          width height stroke stroke-weight fill screen-height screen-width]]))
 
 (def tonic (-> triad (root 7) (inversion 1)))
 (def fourth (-> triad (root 3)))
 (def fifth (-> triad (root 4)))
 
-(def bar 7)
+(def bar 8)
 
 (def in-the-mood
   (let [bassline (fn [root]
@@ -49,17 +49,16 @@
     (reset! plinks []))
 
   (sketch
-    :setup (fn [] (smooth) (background 200))
+    :setup (fn [] (stroke-weight 5))
     :draw  (fn []
              (let [current (now)
                    hits-played (->> hits deref (filter #(< % current)))
                    plinks-played (->> plinks deref (filter #(< (:time %) current)))]
                (clear)
-               (stroke-weight 5)
                (fill (color 135 4 55))
-               (doseq [epoch (take-last 1 hits-played)]
+               (doseq [epoch hits-played]
                  (ellipse
-                   (mod (/ epoch 30) 923)
+                   (mod (/ epoch 30) (screen-width))
                     (+ 100 (/ (- current epoch) 20))
                    50
                    50))
@@ -70,7 +69,7 @@
                    (+ 50 (/ (- current (:time note)) 20))
                    10
                    (* 100 (:duration note))))))
-    :size [1024 768]))
+    :size [(screen-width) (screen-height)]))
 
 (defmethod play-note :beat [{epoch :time}]
   (swap! hits conj epoch)
