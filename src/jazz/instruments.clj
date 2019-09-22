@@ -19,3 +19,7 @@
 (defmethod play-note :default
   [{midi :pitch, seconds :duration}]
   (piano midi :duration seconds))
+
+(defmethod play-note :beat
+  [_]
+  (hat))
